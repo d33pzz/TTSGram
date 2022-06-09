@@ -29,7 +29,7 @@ const SignUpForm = ({ navigation }) => {
       const authUser = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      console.log("Firebase SignUp Successful", email, password);
+      console.log("Firebase SignUp Successful", email, password, username);
 
       db.collection("user")
         .doc(authUser.user.email)

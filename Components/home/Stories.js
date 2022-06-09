@@ -10,7 +10,7 @@ const Stories = () => {
           <View key={index}  style={{ alignItems: "center" }}>
             <Image source={{ uri: story.image_url }} style={styles.story} />
             <Text style={{ color: "white" }}>{
-                story.user_name.length > 11 ? story.user_name.slice(0, 10).toLowerCase() + "..." :
+                story.user_name.length > 11 ? story.user_name.slice(0, 6).toLowerCase() + "..." :
                 story.user_name.toLowerCase()
 
             }</Text>       
@@ -18,7 +18,6 @@ const Stories = () => {
           </View>
         ))}
       </ScrollView>
-      <Text style={{ color: "white" }}>Stories</Text>
     </View>
   );
 };
@@ -28,7 +27,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 50,
-    marginLeft: 6,
+    marginLeft: 18,
     borderWidth: 3,
     borderColor: "#76ff03",
   },
