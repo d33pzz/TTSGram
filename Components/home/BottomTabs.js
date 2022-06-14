@@ -1,7 +1,8 @@
 import { View, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { Divider } from "react-native-elements";
+import { firebase, db } from "../../firebase";
 
 export const bottomTabIcons = [
   {
@@ -37,19 +38,50 @@ export const bottomTabIcons = [
 const BottomTabs = ({ icons }) => {
   const [activeTab, setActiveTab] = useState("Home");
 
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    db.collection("user").onSnapshot((snapshot) => {
+      setUsers(
+        snapshot.docs.map((users) => ({
+          id: users.id,
+          ...users.data(),
+        }))
+      );
+    });
+  }, []);
+
+  function findUser(users) {
+    return users.email === firebase.auth().currentUser.email
+      ? users.email === firebase.auth().currentUser.email
+      : null;
+  }
+
   const Icon = ({ icon }) => (
-    <TouchableOpacity onPress={() => setActiveTab(icon.name)}>
-      <Image
-        source={{ uri: activeTab === icon.name ? icon.active : icon.inactive }}
-        style={[
-          styles.ICON,
-          icon.name === "Profile" ? styles.profilepic() : null,
-          activeTab === "Profile" && icon.name === activeTab
-            ? styles.profilepic(activeTab)
-            : null,
-        ]}
-      />
-    </TouchableOpacity>
+    console.log(icon.name),
+    //console.log(users.find(findUser).profile_picture),
+    (
+      //console.log(users.find(x => x.b === firebase.auth().currentUser.email)),
+      <TouchableOpacity onPress={() => setActiveTab(icon.name)}>
+        <Image
+          source={[
+            { uri: activeTab === icon.name ? icon.active : icon.inactive },
+            // {
+            //   uri:
+            //     icon.name === "Profile"
+            //       ? users.find(findUser).profile_picture
+            //       : null,
+            // },
+          ]}
+          style={[
+            styles.ICON,
+            icon.name === "Profile" ? styles.profilepic() : null,
+            activeTab === "Profile" && icon.name === activeTab
+              ? styles.profilepic(activeTab)
+              : null,
+          ]}
+        />
+      </TouchableOpacity>
+    )
   );
   return (
     <View style={styles.wrapper}>

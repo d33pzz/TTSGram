@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import Header from "../Components/home/Header";
 import Stories from "../Components/home/Stories";
 import Posts from "../Components/home/Posts";
-import { POSTS } from "../data/posts";
 import BottomTabs, { bottomTabIcons } from "../Components/home/BottomTabs";
 import Helper from "../Components/Helper/Helper";
 import { db } from "../firebase";
 
 const HomeScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
-  //const [users, setUsers] = useState([]);
+  
   useEffect(() => {
     db.collectionGroup("posts")
       .orderBy("createdAt", "desc")
@@ -23,6 +22,20 @@ const HomeScreen = ({ navigation }) => {
         );
       });
   }, []);
+
+  
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    db.collection("user").onSnapshot((snapshot) => {
+      setUsers(
+        snapshot.docs.map((users) => ({
+          id: users.id,
+          ...users.data(),
+        }))
+      );
+    });
+  }, []);
+
   return (
     <SafeAreaView
       style={
