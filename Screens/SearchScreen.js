@@ -2,8 +2,9 @@ import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
 import React from 'react'
 
 import Helper from "../Components/Helper/Helper";
+import SearchScreenListView from '../Components/searchScreen/SearchScreenListView';
 
-const SearchScreen = () => {
+const SearchScreen = ({navigation}) => {
   return (
     <SafeAreaView
       style={
@@ -13,7 +14,7 @@ const SearchScreen = () => {
      <View style={styles.logoContainer}>
       <Text style={{color: "white", fontSize: 16}}>This Feature will be available on the Next Update</Text>
     </View>
-      {/* <LoginForm navigation={navigation}/> */}
+      <SearchScreenListView navigation={navigation}/>
     </SafeAreaView>
     
   )
