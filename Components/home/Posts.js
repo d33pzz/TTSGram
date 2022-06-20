@@ -1,7 +1,20 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Dimensions,
+} from "react-native";
+import React, { useState, useEffect, useRef, createRef } from "react";
 import { Divider } from "react-native-elements";
 import { db, firebase } from "../../firebase";
+import {
+  PanGestureHandler,
+  PinchGestureHandler,
+  State,
+} from "react-native-gesture-handler";
 
 const PostFooterIcons = [
   {
@@ -57,7 +70,7 @@ const Posts = ({ post }) => {
       <View style={{ marginBottom: 5 }}></View>
       <PostHeader post={post} />
       <PostImage post={post} />
-      <View style={{ marginHorizontal: 15, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 15, marginTop: 5, zIndex: 999 }}>
         <PostFooter post={post} handleLike={handleLike} />
         <Likes post={post} />
         <Caption post={post} />
@@ -74,6 +87,7 @@ const PostHeader = ({ post }) => (
       justifyContent: "space-between",
       margin: 5,
       alignItems: "center",
+      zIndex: 99,
     }}
   >
     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -87,14 +101,111 @@ const PostHeader = ({ post }) => (
   </View>
 );
 
-const PostImage = ({ post }) => (
-  <View style={{ width: "100%", height: 450 }}>
-    <Image
-      source={{ uri: post.imageUrl }}
-      style={{ height: "100%", resizeMode: "cover" }}
-    />
-  </View>
-);
+const PostImage = ({ post }) => {
+  const [panEnabled, setPanEnabled] = useState(false);
+
+  const { width } = Dimensions.get("window");
+  const SIZE = width;
+
+  const scale = useRef(new Animated.Value(1)).current;
+  const translateX = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  const pinchRef = createRef();
+  const panRef = createRef();
+
+  const onPinchEvent = Animated.event(
+    [
+      {
+        nativeEvent: { scale },
+      },
+    ],
+    { useNativeDriver: true }
+  );
+
+  const onPanEvent = Animated.event(
+    [
+      {
+        nativeEvent: {
+          translationX: translateX,
+          translationY: translateY,
+        },
+      },
+    ],
+    { useNativeDriver: true }
+  );
+
+  const handlePinchStateChange = ({ nativeEvent }) => {
+    // enabled pan only after pinch-zoom
+    if (nativeEvent.state === State.ACTIVE) {
+      setPanEnabled(true);
+    }
+
+    // when scale < 1, reset scale back to original (1)
+    const nScale = nativeEvent.scale;
+    if (nativeEvent.state === State.END) {
+      if (nScale < 1) {
+        Animated.spring(scale, {
+          toValue: 1,
+          useNativeDriver: true,
+        }).start();
+        Animated.spring(translateX, {
+          toValue: 0,
+          useNativeDriver: true,
+        }).start();
+        Animated.spring(translateY, {
+          toValue: 0,
+          useNativeDriver: true,
+        }).start();
+
+        setPanEnabled(false);
+      }
+    }
+  };
+  return (
+    <View>
+      <PanGestureHandler
+        onGestureEvent={onPanEvent}
+        ref={panRef}
+        simultaneousHandlers={[pinchRef]}
+        enabled={panEnabled}
+        failOffsetX={[-1000, 1000]}
+        shouldCancelWhenOutside
+      >
+        <Animated.View>
+          <PinchGestureHandler
+            ref={pinchRef}
+            onGestureEvent={onPinchEvent}
+            simultaneousHandlers={[panRef]}
+            onHandlerStateChange={handlePinchStateChange}
+            shouldCancelWhenOutside
+          >
+            <Animated.Image
+              source={{
+                uri: post.imageUrl,
+              }}
+              style={{
+                width: SIZE,
+                height: SIZE,
+                zIndex: -99,
+                transform: [{ scale }, { translateX }, { translateY }],
+              }}
+              resizeMode="cover"
+            />
+          </PinchGestureHandler>
+        </Animated.View>
+      </PanGestureHandler>
+      {/* <PinchGestureHandler >
+        <Animated.View style={{ width: SIZE, height: SIZE }}>
+          <Animated.Image
+            source={{ uri: post.imageUrl }}
+            style={{ width: SIZE, height: SIZE, resizeMode: "cover" }}
+          />
+        </Animated.View>
+      </PinchGestureHandler> */}
+    </View>
+  );
+};
 
 const PostFooter = ({ handleLike, post }) => (
   <View style={{ flexDirection: "row", justifyContent: "space-between" }}>

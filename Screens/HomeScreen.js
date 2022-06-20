@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../Components/home/Header";
 import Stories from "../Components/home/Stories";
 import Posts from "../Components/home/Posts";
-import BottomTabs, { bottomTabIcons } from "../Components/home/BottomTabs";
 import Helper from "../Components/Helper/Helper";
 import { db } from "../firebase";
 
@@ -44,12 +43,12 @@ const HomeScreen = ({ navigation }) => {
     >
       <Header navigation={navigation} />
       <Stories />
-      <ScrollView style={{ flexGrow: 1 }}>
+      <ScrollView style={{ flexGrow: 1 }} pinchGestureEnabled={false}>
         {posts.map((post, index) => (
           <Posts post={post} key={index} />
         ))}
       </ScrollView>
-      <BottomTabs icons={bottomTabIcons} />
+      {/* <BottomTabs icons={bottomTabIcons} /> */}
     </SafeAreaView>
   );
 };

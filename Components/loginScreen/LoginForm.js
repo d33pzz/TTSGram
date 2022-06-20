@@ -40,7 +40,6 @@ const LoginForm = ({ navigation }) => {
           {
             text: "Sign Up",
             onPress: () => navigation.push("SignUpScreen"),
-
           }
         ]
       );

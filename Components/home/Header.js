@@ -33,7 +33,7 @@ const Header = ({ navigation }) => {
           <Image
             style={styles.icon}
             source={{
-              uri: "https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/ffffff/external-like-instagram-flatart-icons-outline-flatarticons.png",
+              uri: "https://img.icons8.com/material-outlined/96/ffffff/like--v1.png",
             }}
           />
         </TouchableOpacity>

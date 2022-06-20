@@ -3,9 +3,8 @@ import React from "react";
 
 
 import Helper from "../Components/Helper/Helper";
+import ProfilePage from "../Components/profilePage/ProfilePage";
 
-const INSTA_LOGO =
-  "https://img.icons8.com/nolan/512/instagram-new.png";
 
 const ProfileScreen = ({navigation}) => (
     <SafeAreaView
@@ -13,12 +12,8 @@ const ProfileScreen = ({navigation}) => (
         Platform.OS === "android" ? Helper.AndroidSafeArea : styles.container
       }
     >
-     
-      <View style={styles.logoContainer}>
-        <Image source={{ uri: INSTA_LOGO, height: 100, width: 100,}} />
-      </View>
-
-      {/* <LoginForm navigation={navigation}/> */}
+      <ProfilePage navigation={navigation}/>
+    
     </SafeAreaView>
   );
 
@@ -28,10 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 12,
-  },
-  logoContainer: {
-    alignItems: "center",
-    marginTop: 60,
   },
 });
 

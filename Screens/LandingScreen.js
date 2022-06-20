@@ -1,14 +1,18 @@
 import * as React from "react";
-import BottomTabs, { bottomTabIcons } from "../Components/home/BottomTabs";
 import { SafeAreaView, StyleSheet, ScrollView, View } from "react-native";
 import { Image, TouchableOpacity } from "react-native";
 import { Divider } from "react-native-elements";
 import { useState } from "react";
 import Helper from "../Components/Helper/Helper";
 import HomeScreen from "./HomeScreen";
+import NewPostScreen from "./NewPostScreen";
+import SearchScreen from "./SearchScreen";
+import ProfileScreen from "./ProfileScreen";
+import ReelsScreen from "./ReelsScreen";
 
-const LandingScreen = () => {
+const LandingScreen = ({navigation}) => {
   const [activeTab, setActiveTab] = useState("Home");
+  const [mainView, setMainView] = useState(0);
   const bottomTabImages = [
     {
       case: 0,
@@ -32,23 +36,29 @@ const LandingScreen = () => {
     {
       case: 3,
       name: "Acivity",
-      active: "https://img.icons8.com/ios-glyphs/90/ffffff/like--v1.png",
+      active: "https://img.icons8.com/ios-filled/100/ffffff/undefined/plus-2-math.png",
       inactive:
-        "https://img.icons8.com/material-outlined/96/ffffff/like--v1.png",
+        "https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/ffffff/external-plus-multimedia-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png",
     },
     {
       case: 4,
       name: "Profile",
       active:
-        "https://scontent-maa2-1.xx.fbcdn.net/v/t39.30808-6/260896643_1553211365029296_4050257997148333829_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=UFv5ULgJ_MgAX_HuN0H&_nc_ht=scontent-maa2-1.xx&oh=00_AT9ozNjGjWH4iVsy7f_g5FOLTQA9JAZpZS9RdAqdGsPouw&oe=62952A40",
+        "https://img.icons8.com/ios-filled/100/ffffff/undefined/user.png",
       inactive:
-        "https://scontent-maa2-1.xx.fbcdn.net/v/t39.30808-6/260896643_1553211365029296_4050257997148333829_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=UFv5ULgJ_MgAX_HuN0H&_nc_ht=scontent-maa2-1.xx&oh=00_AT9ozNjGjWH4iVsy7f_g5FOLTQA9JAZpZS9RdAqdGsPouw&oe=62952A40",
+        "https://img.icons8.com/ios-filled/100/ffffff/undefined/user.png",
     },
   ];
+
   const BottomIcon = ({ bottomTabImages }) => (
     console.log(bottomTabImages.name),
     (
-      <TouchableOpacity onPress={() => setActiveTab(bottomTabImages.name)}>
+      <TouchableOpacity
+        onPress={() => {
+          setActiveTab(bottomTabImages.name),
+           setMainView(bottomTabImages.case);
+        }}
+      >
         <Image
           source={[
             {
@@ -70,6 +80,24 @@ const LandingScreen = () => {
     )
   );
 
+  const MainView = ({ mainView }) => {
+    switch (mainView) {
+      case 0:
+        return <HomeScreen navigation={navigation}/>;
+      case 1:
+        return <SearchScreen />;
+      case 2:
+        return <ReelsScreen/>;
+      case 3:
+        return <NewPostScreen />;
+      case 4:
+        return <ProfileScreen />;
+
+      default:
+        return <HomeScreen />;
+    }
+  };
+
   return (
     <SafeAreaView
       style={
@@ -79,7 +107,7 @@ const LandingScreen = () => {
       }
     >
       <ScrollView style={{ flexGrow: 1 }}>
-        <HomeScreen />
+        <MainView mainView={mainView} />
       </ScrollView>
       <View style={styles.wrapper}>
         <Divider width={1} orientation="vertical" />
