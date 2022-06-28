@@ -5,6 +5,7 @@ import SignUpForm from "../Components/signupScreen/SignUpForm";
 
 import Helper from "../Components/Helper/Helper";
 
+const T_LOGO ="https://img.icons8.com/nolan/96/t-key.png"
 const INSTA_LOGO =
   "https://img.icons8.com/nolan/512/instagram-new.png";
 
@@ -16,7 +17,7 @@ const SignUpScreen = ({navigation}) => (
     >
      
       <View style={styles.logoContainer}>
-        <Image source={{ uri: INSTA_LOGO, height: 100, width: 100,}} />
+        <Image source={{ uri: T_LOGO, height: 100, width: 100,}} />
       </View>
 
       <SignUpForm navigation={navigation}/> 

@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
+import { LinearGradient } from 'expo-linear-gradient';
 
 import {firebase} from "../../firebase";
 
@@ -63,7 +64,7 @@ const LoginForm = ({ navigation }) => {
                 {
                   borderColor:
                     values.email.length < 1 || Validator.validate(values.email)
-                      ? "#9c27b0"
+                      ? "#bf26ff"
                       : "red",
                 },
               ]}
@@ -88,7 +89,7 @@ const LoginForm = ({ navigation }) => {
                 {
                   borderColor:
                     values.password.length < 1 || values.password.length >= 6
-                      ? "#9c27b0"
+                      ? "#bf26ff"
                       : "red",
                 },
               ]}
@@ -108,7 +109,7 @@ const LoginForm = ({ navigation }) => {
               />
             </View>
             <View style={{ alignItems: "flex-end", marginBottom: 30 }}>
-              <Text style={{ color: "#003cff" }}>Forgot Password?</Text>
+              <Text style={{ color: "#216aff" }}>Forgot Password?</Text>
             </View>
             <Pressable
               titleSize={20}
@@ -118,7 +119,6 @@ const LoginForm = ({ navigation }) => {
             >
               <Text style={styles.buttonText}>Login</Text>
             </Pressable>
-
             <View style={styles.signupContainer}>
               <Text style={{ color: "#cfd8dc" }}>Don't have an account? </Text>
               <TouchableOpacity onPress={() => navigation.push("SignUpScreen")}>
@@ -144,14 +144,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#212121",
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#9c27b0",
+    borderColor: "#bf26ff",
   },
   button: (isValid) => ({
     alignItems: "center",
     justifyContent: "center",
     minHeight: 42,
     borderRadius: 15,
-    backgroundColor: isValid ? "#820682" : "#e8a3e2",
+    backgroundColor: isValid ? "#bf26ff" : "#e8a3e2",
   }),
   buttonText: {
     fontWeight: "600",
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   signUpText: {
-    color: "#003cff",
+    color: "#216aff",
   },
 });
 export default LoginForm;

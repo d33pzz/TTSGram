@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Touchable,
+} from "react-native";
 import React, { useState } from "react";
 import { firebase, db } from "../../firebase";
 import { Card } from "react-native-shadow-cards";
@@ -13,49 +20,31 @@ import Helper, {
   EDIT_PROFILE,
 } from "../Helper/Helper";
 
-const ProfilePage = ({ navigation }) => (
+const UserDetailsForm = ({ navigation, user }) => (
   <View style={styles.container}>
-    <Main navigation={navigation} />
+    <Main navigation={navigation} user={user} />
   </View>
 );
 
-const Main = ({ navigation }) => {
-  const [user, setUser] = useState("");
-  const handleSignOut = async () => {
-    try {
-      await firebase.auth().signOut();
-      console.log("Signed out successfully");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  db.collection("user")
-    .doc(firebase.auth().currentUser.email)
-    .get()
-    .then((snapshot) => {
-      const data = snapshot.data();
-      //console.log(data);
-      setUser(data);
-    })
-    .catch((err) => {
-      console.log("Error getting documents", err);
-    });
+const Main = ({ navigation, user }) => {
   return (
     <>
       <View style={styles.headerContainer}>
-        <Text></Text>
-        <Text style={styles.headerText}>{user.username}</Text>
         <TouchableOpacity
-          onPress={() => navigation.push("UpdateProfileScreen")}
+          onPress={() => {
+            navigation != null ? navigation.goBack() : null;
+          }}
         >
           <Image
             source={{
-              uri: EDIT_PROFILE,
+              uri: "https://img.icons8.com/ios-filled/100/ffffff/back.png",
             }}
             style={{ width: 30, height: 30 }}
           />
         </TouchableOpacity>
+
+        <Text style={styles.headerText}>{user.username}</Text>
+        <Text></Text>
       </View>
       <View style={styles.logoContainer}>
         <Image
@@ -63,16 +52,15 @@ const Main = ({ navigation }) => {
           source={{ uri: user.profile_picture }}
         />
       </View>
-
       <View
         style={{ marginTop: 20, flexDirection: "row", alignItems: "center" }}
       >
         <Image
-          style={styles.socialcon}
+          style={{ width: 20, height: 20 }}
           source={{ uri: "https://img.icons8.com/nolan/512/share-2.png" }}
         />
         <View style={{ marginLeft: 20 }}>
-          <Text style={{ color: "#FFF" }}>SOCIAL NETWORK</Text>
+          <Text style={{ color: "#FFF" }}>CONNECT WITH ME</Text>
         </View>
       </View>
 
@@ -181,19 +169,6 @@ const Main = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-
-      <View
-        style={{
-          marginTop: 50,
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
-        <TouchableOpacity onPress={handleSignOut}>
-          <Text style={{ color: "#fff" }}>SIGN OUT</Text>
-        </TouchableOpacity>
-      </View>
     </>
   );
 };
@@ -220,6 +195,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 10,
   },
+
   headerContainer: {
     justifyContent: "space-between",
     flexDirection: "row",
@@ -253,4 +229,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfilePage;
+export default UserDetailsForm;

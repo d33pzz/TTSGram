@@ -85,16 +85,16 @@ const LandingScreen = ({navigation}) => {
       case 0:
         return <HomeScreen navigation={navigation}/>;
       case 1:
-        return <SearchScreen />;
+        return <SearchScreen navigation={navigation}/>;
       case 2:
-        return <ReelsScreen/>;
+        return <ReelsScreen navigation={navigation}/>;
       case 3:
-        return <NewPostScreen />;
+        return <NewPostScreen navigation={navigation}/>;
       case 4:
-        return <ProfileScreen />;
+        return <ProfileScreen navigation={navigation}/>;
 
       default:
-        return <HomeScreen />;
+        return <HomeScreen navigation={navigation}/>;
     }
   };
 

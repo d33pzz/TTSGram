@@ -8,8 +8,12 @@ import { db } from "../firebase";
 
 const HomeScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
-  
+
   useEffect(() => {
+    getPostData();
+  }, []);
+
+  const getPostData = async () => {
     db.collectionGroup("posts")
       .orderBy("createdAt", "desc")
       .onSnapshot((snapshot) => {
@@ -20,9 +24,8 @@ const HomeScreen = ({ navigation }) => {
           }))
         );
       });
-  }, []);
+  };
 
-  
   const [users, setUsers] = useState([]);
   useEffect(() => {
     db.collection("user").onSnapshot((snapshot) => {
@@ -42,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
       }
     >
       <Header navigation={navigation} />
-      <Stories />
+      {/* <Stories /> */}
       <ScrollView style={{ flexGrow: 1 }} pinchGestureEnabled={false}>
         {posts.map((post, index) => (
           <Posts post={post} key={index} />

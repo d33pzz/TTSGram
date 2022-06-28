@@ -7,6 +7,10 @@ import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
 import LandingScreen from "./LandingScreen";
 import ProfileScreen from "./ProfileScreen";
+import UpdateProfile from "../Components/profileEditScreen/UpdateProfile";
+import ProfileEditScreen from "./ProfileEditScreen";
+import SearchScreen from "./SearchScreen";
+import UserDetailsScreen from "./UserDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +29,11 @@ export const SignedInStack = () => (
       <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
       <Stack.Screen name="LandingScreen" component={LandingScreen} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="UpdateProfileScreen" component={ProfileEditScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} /> 
+      <Stack.Screen name="UserDetailsScreen" component={UserDetailsScreen} />
+      
+      
     </Stack.Navigator>
   </NavigationContainer>
 );

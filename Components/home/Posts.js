@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
+  TextInput,
+  Pressable,
+  Modal,
 } from "react-native";
 import React, { useState, useEffect, useRef, createRef } from "react";
 import { Divider } from "react-native-elements";
@@ -15,6 +18,7 @@ import {
   PinchGestureHandler,
   State,
 } from "react-native-gesture-handler";
+import { color } from "react-native-reanimated";
 
 const PostFooterIcons = [
   {
@@ -38,11 +42,13 @@ const PostFooterIcons = [
 ];
 
 const Posts = ({ post }) => {
+  const [commentVisiblity, setCommentVisiblity] = useState(true);
   const handleLike = (post) => {
     const currentLikeStatus = !post.likes_by_users.includes(
       firebase.auth().currentUser.email
     );
 
+    
     db.collection("user")
       .doc(post.owner_email)
       .collection("posts")
@@ -69,13 +75,19 @@ const Posts = ({ post }) => {
       <Divider width={1} orientation="vertical" />
       <View style={{ marginBottom: 5 }}></View>
       <PostHeader post={post} />
+      <Caption post={post} />
       <PostImage post={post} />
       <View style={{ marginHorizontal: 15, marginTop: 5, zIndex: 999 }}>
-        <PostFooter post={post} handleLike={handleLike} />
+        <PostFooter
+          post={post}
+          handleLike={handleLike}
+          commentVisiblity={commentVisiblity}
+          setCommentVisiblity={setCommentVisiblity}
+        />
         <Likes post={post} />
-        <Caption post={post} />
+        <CommentInput post={post} commentVisiblity={commentVisiblity} />
         <CommentSection post={post} />
-        <Comments post={post} />
+        {/* <Comments post={post} /> */}
       </View>
     </View>
   );
@@ -93,7 +105,7 @@ const PostHeader = ({ post }) => (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <Image source={{ uri: post.profile_picture }} style={styles.story} />
 
-      <Text style={{ fontWeight: "700", marginLeft: 5, color: "white" }}>
+      <Text style={{ fontWeight: "700", marginLeft: 15, color: "white" }}>
         {post.user}
       </Text>
     </View>
@@ -207,37 +219,134 @@ const PostImage = ({ post }) => {
   );
 };
 
-const PostFooter = ({ handleLike, post }) => (
-  <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-    <View style={styles.leftFootedContainer}>
-      <TouchableOpacity onPress={() => handleLike(post)}>
-        <Image
-          style={styles.footerICon}
-          source={{
-            uri: post.likes_by_users.includes(firebase.auth().currentUser.email)
-              ? PostFooterIcons[0].likedimageurl
-              : PostFooterIcons[0].imageUrl,
-          }}
-        />
-      </TouchableOpacity>
+const PostFooter = ({ handleLike, post }) => {
+  return (
+    <>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={styles.leftFootedContainer}>
+          <TouchableOpacity onPress={() => handleLike(post)}>
+            <Image
+              style={styles.footerICon}
+              source={{
+                uri: post.likes_by_users.includes(
+                  firebase.auth().currentUser.email
+                )
+                  ? PostFooterIcons[0].likedimageurl
+                  : PostFooterIcons[0].imageUrl,
+              }}
+            />
+          </TouchableOpacity>
 
-      <Icon
-        imgStyle={styles.footerICon}
-        imageUrl={PostFooterIcons[1].imageUrl}
-      />
-      <Icon
-        imgStyle={styles.footerICon}
-        imageUrl={PostFooterIcons[2].imageUrl}
-      />
-    </View>
-    <View>
-      <Icon
-        imgStyle={styles.footerICon}
-        imageUrl={PostFooterIcons[3].imageUrl}
-      />
-    </View>
-  </View>
-);
+          <TouchableOpacity>
+            <Icon
+              imgStyle={styles.footerICon}
+              imageUrl={PostFooterIcons[1].imageUrl}
+            />
+          </TouchableOpacity>
+
+          {/* <Icon
+            imgStyle={styles.footerICon}
+            imageUrl={PostFooterIcons[2].imageUrl}
+          /> */}
+        </View>
+        <View>
+          {/* <Icon
+            imgStyle={styles.footerICon}
+            imageUrl={PostFooterIcons[3].imageUrl}
+          /> */}
+        </View>
+      </View>
+    </>
+  );
+};
+
+const CommentInput = ({ post, commentVisiblity }) => {
+  const [user, setUser] = useState("");
+  const [comment, setComment] = useState("");
+  useEffect(
+    () =>
+      db
+        .collection("user")
+        .doc(firebase.auth().currentUser.email)
+        .get()
+        .then((snapshot) => {
+          const data = snapshot.data();
+          //console.log(data);
+          setUser(data);
+        })
+        .catch((err) => {
+          console.log("Error getting documents", err);
+        }),
+    []
+  );
+
+  const handleComment = (post) => {
+    commentVisiblity = false;
+    setComment("");
+    db.collection("user")
+      .doc(post.owner_email)
+      .collection("posts")
+      .doc(post.id)
+      .update({
+        comments: firebase.firestore.FieldValue.arrayUnion({
+          user_email: firebase.auth().currentUser.email,
+          user_name: user.username,
+          comment: comment,
+        }),
+      })
+      .then(() => {
+        console.log("document succesfully updated");
+      })
+      .catch((error) => {
+        console.log("Error updating document " + error);
+      });
+  };
+
+  return (
+    <>
+      {commentVisiblity && (
+        <View
+          style={{
+            width: "100%",
+            margin: 5,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={styles.inputfield}>
+            <TextInput
+              placeholderTextColor="#cfd8dc"
+              placeholder="Comment"
+              autoCapitalize="none"
+              color="#fff"
+              autoCorrect={false}
+              autoFocus={false}
+              defaultValue={comment}
+              onChangeText={(value) => setComment(value)}
+            />
+          </View>
+
+          <TouchableOpacity
+            onPress={() => handleComment(post)}
+            style={{
+              marginRight: 5,
+              marginBottom: 10,
+              width: "18%",
+              backgroundColor: "#212121",
+              height: 40,
+              borderRadius: 15,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "#ffffff" }}>Send</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </>
+  );
+};
 
 const Icon = ({ imgStyle, imageUrl }) => (
   <TouchableOpacity>
@@ -246,18 +355,17 @@ const Icon = ({ imgStyle, imageUrl }) => (
 );
 
 const Likes = ({ post }) => (
-  <View style={{ flexDirection: "row", marginTop: 4 }}>
+  <View style={{ flexDirection: "row", marginTop: 4, marginLeft: 12 }}>
     <Text style={{ color: "white", fontWeight: "600" }}>
-      {post.likes_by_users.length.toLocaleString("en")} likes
+      {post.likes_by_users.length.toLocaleString("en")}
     </Text>
   </View>
 );
 
 const Caption = ({ post }) => (
-  <View style={{ marginTop: 5 }}>
+  <View style={{ marginTop: 5, marginLeft: 15, marginBottom: 5, zIndex: 999 }}>
     <Text style={{ color: "white" }}>
-      <Text style={{ fontWeight: "600" }}>{post.user_name} </Text>
-      <Text> {post.caption}</Text>
+      <Text style={{ fontWeight: "600" }}>{post.caption} </Text>
     </Text>
   </View>
 );
@@ -266,29 +374,74 @@ const Caption = ({ post }) => (
 // 0 returns false
 // 1 or more returns true
 
-const CommentSection = ({ post }) => (
-  <View style={{ marginTop: 5 }}>
-    {!!post.comments.length && (
-      <Text style={{ color: "gray" }}>
-        View{post.comments.length > 1 ? " all" : ""} {post.comments.length}
-        {post.comments.length > 1 ? " comments" : " comment"}
-      </Text>
-    )}
-  </View>
+const CommentSection = ({ post }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  return (
+    <View style={{ marginTop: 5 }}>
+      {!!post.comments.length && (
+        <View>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text style={{ color: "gray" }}>
+              View{post.comments.length > 1 ? " all" : ""}{" "}
+              {post.comments.length}
+              {post.comments.length > 1 ? " comments" : " comment"}
+            </Text>
+          </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalTextHeading}>COMMENTS</Text>
+                <Comments post={post} />
 
-  // 3 Scenarios
-  // A. 0 Comments
-  // B. 1 comment
-  // C. multiple Comments
-);
+                <Pressable
+                  style={[styles.modalButton, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Hide</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
+    </View>
+
+    // 3 Scenarios
+    // A. 0 Comments
+    // B. 1 comment
+    // C. multiple Comments
+  );
+};
 
 const Comments = ({ post }) => (
   <>
     {post.comments.map((comment, index) => (
-      <View key={index} style={{ marginTop: 5, flexDirection: "row" }}>
-        <Text style={{ color: "white" }}>
-          <Text style={{ fontWeight: "600" }}>{comment.user_name}</Text>{" "}
-          {comment.comment}
+      <View
+        key={index}
+        style={{
+          marginTop: 5,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <Text
+          style={{
+            color: "white",
+            justifyContent: "space-between",
+            flexDirection: "row",
+          }}
+        >
+          <Text style={{ fontWeight: "600", fontSize: 15, }}>{comment.user_name}</Text>
+          <Text style={{ color: "#cfd8dc", fontWeight: "200", fontSize: 15, }}>{"  "}{comment.comment}</Text>
         </Text>
       </View>
     ))}
@@ -301,18 +454,77 @@ const styles = StyleSheet.create({
     height: 35,
     borderRadius: 50,
     marginLeft: 6,
-    borderWidth: 1.6,
-    borderColor: "#76ff03",
+    // borderWidth: 1.6,
+    // borderColor: "#216aff",
   },
   leftFootedContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    //justifyContent: "space-between",
     width: "32%",
   },
 
   footerICon: {
     width: 33,
     height: 33,
+    margin: 5,
+  },
+
+  inputfield: {
+    borderRadius: 15,
+    borderColor: "#212121",
+    padding: 12,
+    backgroundColor: "#212121",
+    marginBottom: 10,
+    borderWidth: 1,
+    width: "75%",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    width: "100%",
+    backgroundColor: "#212121",
+    borderRadius: 20,
+    padding: 35,
+    borderColor: "#216aff",
+    borderWidth: 1,
+    alignItems: "center",
+    shadowColor: "#fff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTextHeading: {
+    marginBottom: 15,
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 16,
+  },
+  modalButton: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 10,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#216aff",
+  },
+  textStyle: {
+    color: "white",
+    width: 100,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

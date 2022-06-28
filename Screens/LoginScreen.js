@@ -7,6 +7,7 @@ import Helper from "../Components/Helper/Helper";
 
 const INSTA_LOGO =
   "https://img.icons8.com/nolan/512/instagram-new.png";
+  const T_LOGO ="https://img.icons8.com/nolan/96/t-key.png"
 
 const LoginScreen = ({navigation}) => (
     <SafeAreaView
@@ -16,7 +17,7 @@ const LoginScreen = ({navigation}) => (
     >
      
       <View style={styles.logoContainer}>
-        <Image source={{ uri: INSTA_LOGO, height: 100, width: 100,}} />
+        <Image source={{ uri: T_LOGO, height: 100, width: 100,}} />
       </View>
 
       <LoginForm navigation={navigation}/>
