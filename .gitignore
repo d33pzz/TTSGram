@@ -56,6 +56,10 @@ buck-out/
 # Bundle artifacts
 *.jsbundle
 
+#Firebase
+firebase.js
+
+
 # CocoaPods
 /ios/Pods/
 
@@ -63,5 +67,3 @@ buck-out/
 .expo/*
 web-build/
 
-#Firebase
-firebase.js
