@@ -64,4 +64,4 @@ buck-out/
 web-build/
 
 #Firebase
-.firebase.js
+firebase.js
