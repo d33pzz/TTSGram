@@ -213,7 +213,7 @@ const UpdatProfileForm = ({ navigation }) => {
                         borderColor:
                           values.username.length < 1 ||
                           values.username.length >= 3
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -267,7 +267,7 @@ const UpdatProfileForm = ({ navigation }) => {
                         borderColor:
                           values.whatsapp.length < 1 ||
                           values.whatsapp.length >= 10
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -320,7 +320,7 @@ const UpdatProfileForm = ({ navigation }) => {
                         borderColor:
                           values.instagram.length < 1 ||
                           values.instagram.length >= 3
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -375,7 +375,7 @@ const UpdatProfileForm = ({ navigation }) => {
                         borderColor:
                           values.linkedin.length < 1 ||
                           values.linkedin.length >= 3
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -428,7 +428,7 @@ const UpdatProfileForm = ({ navigation }) => {
                       {
                         borderColor:
                           values.skype.length < 1 || values.skype.length >= 3
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -482,7 +482,7 @@ const UpdatProfileForm = ({ navigation }) => {
                         borderColor:
                           values.snapchat.length < 1 ||
                           values.snapchat.length >= 3
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -536,7 +536,7 @@ const UpdatProfileForm = ({ navigation }) => {
                         borderColor:
                           values.twitter.length < 1 ||
                           values.twitter.length >= 3
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -591,7 +591,7 @@ const UpdatProfileForm = ({ navigation }) => {
                       {
                         borderColor:
                           values.github.length < 1 || values.github.length >= 3
-                            ? "#bf26ff"
+                            ? "#ffc453"
                             : "red",
                       },
                     ]}
@@ -636,10 +636,10 @@ const styles = StyleSheet.create({
   inputfield: {
     borderRadius: 15,
     padding: 12,
-    backgroundColor: "#212121",
+    backgroundColor: "#2c2b62",
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#bf26ff",
+    borderColor: "#ffc453",
   },
   button: (isValid) => ({
     alignItems: "center",
@@ -647,7 +647,7 @@ const styles = StyleSheet.create({
     minHeight: 42,
     borderRadius: 15,
     marginBottom: 70,
-    backgroundColor: isValid ? "#bf26ff" : "#e8a3e2",
+    backgroundColor: isValid ? "#f7931d" : "#ffc453",
   }),
   buttonText: {
     fontWeight: "600",

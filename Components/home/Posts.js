@@ -17,8 +17,8 @@ import {
   PanGestureHandler,
   PinchGestureHandler,
   State,
+  TapGestureHandler,
 } from "react-native-gesture-handler";
-import { color } from "react-native-reanimated";
 
 const PostFooterIcons = [
   {
@@ -42,13 +42,10 @@ const PostFooterIcons = [
 ];
 
 const Posts = ({ post }) => {
-  const [commentVisiblity, setCommentVisiblity] = useState(true);
-  const handleLike = (post) => {
+  const handleLike = async (post) => {
     const currentLikeStatus = !post.likes_by_users.includes(
       firebase.auth().currentUser.email
     );
-
-    
     db.collection("user")
       .doc(post.owner_email)
       .collection("posts")
@@ -76,16 +73,11 @@ const Posts = ({ post }) => {
       <View style={{ marginBottom: 5 }}></View>
       <PostHeader post={post} />
       <Caption post={post} />
-      <PostImage post={post} />
-      <View style={{ marginHorizontal: 15, marginTop: 5, zIndex: 999 }}>
-        <PostFooter
-          post={post}
-          handleLike={handleLike}
-          commentVisiblity={commentVisiblity}
-          setCommentVisiblity={setCommentVisiblity}
-        />
+      <PostImage post={post} handleLike={handleLike} />
+      <View style={{ marginHorizontal: 15, marginTop: 5, zIndex: -99 }}>
+        <PostFooter post={post} handleLike={handleLike} />
         <Likes post={post} />
-        <CommentInput post={post} commentVisiblity={commentVisiblity} />
+        <CommentInput post={post} />
         <CommentSection post={post} />
         {/* <Comments post={post} /> */}
       </View>
@@ -99,7 +91,7 @@ const PostHeader = ({ post }) => (
       justifyContent: "space-between",
       margin: 5,
       alignItems: "center",
-      zIndex: 99,
+      zIndex: -99,
     }}
   >
     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -113,7 +105,7 @@ const PostHeader = ({ post }) => (
   </View>
 );
 
-const PostImage = ({ post }) => {
+const PostImage = ({ post, handleLike }) => {
   const [panEnabled, setPanEnabled] = useState(false);
 
   const { width } = Dimensions.get("window");
@@ -171,42 +163,68 @@ const PostImage = ({ post }) => {
         }).start();
 
         setPanEnabled(false);
+      } else if (nScale > 1) {
+        Animated.spring(scale, {
+          toValue: 1,
+          useNativeDriver: true,
+        }).start();
+        Animated.spring(translateX, {
+          toValue: 0,
+          useNativeDriver: true,
+        }).start();
+        Animated.spring(translateY, {
+          toValue: 0,
+          useNativeDriver: true,
+        }).start();
+
+        setPanEnabled(false);
       }
     }
   };
+
   return (
     <View>
-      <PanGestureHandler
-        onGestureEvent={onPanEvent}
-        ref={panRef}
-        simultaneousHandlers={[pinchRef]}
-        enabled={panEnabled}
-        failOffsetX={[-1000, 1000]}
-        shouldCancelWhenOutside
+      <TapGestureHandler
+        numberOfTaps={2}
+        onActivated={() => {
+          handleLike(post);
+        }}
       >
-        <Animated.View>
-          <PinchGestureHandler
-            ref={pinchRef}
-            onGestureEvent={onPinchEvent}
-            simultaneousHandlers={[panRef]}
-            onHandlerStateChange={handlePinchStateChange}
+        <View>
+          <PanGestureHandler
+            onGestureEvent={onPanEvent}
+            ref={panRef}
+            simultaneousHandlers={[pinchRef]}
+            enabled={panEnabled}
+            failOffsetX={[-1000, 1000]}
             shouldCancelWhenOutside
           >
-            <Animated.Image
-              source={{
-                uri: post.imageUrl,
-              }}
-              style={{
-                width: SIZE,
-                height: SIZE,
-                zIndex: -99,
-                transform: [{ scale }, { translateX }, { translateY }],
-              }}
-              resizeMode="cover"
-            />
-          </PinchGestureHandler>
-        </Animated.View>
-      </PanGestureHandler>
+            <Animated.View>
+              <PinchGestureHandler
+                ref={pinchRef}
+                onGestureEvent={onPinchEvent}
+                simultaneousHandlers={[panRef]}
+                onHandlerStateChange={handlePinchStateChange}
+                shouldCancelWhenOutside
+              >
+                <Animated.Image
+                  source={{
+                    uri: post.imageUrl,
+                  }}
+                  style={{
+                    width: SIZE,
+                    height: SIZE,
+                    zIndex: -99,
+                    transform: [{ scale }, { translateX }, { translateY }],
+                  }}
+                  resizeMode="cover"
+                  resizeMethod="resize"
+                />
+              </PinchGestureHandler>
+            </Animated.View>
+          </PanGestureHandler>
+        </View>
+      </TapGestureHandler>
       {/* <PinchGestureHandler >
         <Animated.View style={{ width: SIZE, height: SIZE }}>
           <Animated.Image
@@ -260,7 +278,7 @@ const PostFooter = ({ handleLike, post }) => {
   );
 };
 
-const CommentInput = ({ post, commentVisiblity }) => {
+const CommentInput = ({ post }) => {
   const [user, setUser] = useState("");
   const [comment, setComment] = useState("");
   useEffect(
@@ -281,7 +299,6 @@ const CommentInput = ({ post, commentVisiblity }) => {
   );
 
   const handleComment = (post) => {
-    commentVisiblity = false;
     setComment("");
     db.collection("user")
       .doc(post.owner_email)
@@ -304,14 +321,14 @@ const CommentInput = ({ post, commentVisiblity }) => {
 
   return (
     <>
-      {commentVisiblity && (
-        <View
+      <View
           style={{
             width: "100%",
             margin: 5,
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
+            zIndex: -99
           }}
         >
           <View style={styles.inputfield}>
@@ -333,7 +350,7 @@ const CommentInput = ({ post, commentVisiblity }) => {
               marginRight: 5,
               marginBottom: 10,
               width: "18%",
-              backgroundColor: "#212121",
+              backgroundColor: "#f7931d",
               height: 40,
               borderRadius: 15,
               justifyContent: "center",
@@ -343,7 +360,6 @@ const CommentInput = ({ post, commentVisiblity }) => {
             <Text style={{ color: "#ffffff" }}>Send</Text>
           </TouchableOpacity>
         </View>
-      )}
     </>
   );
 };
@@ -363,7 +379,7 @@ const Likes = ({ post }) => (
 );
 
 const Caption = ({ post }) => (
-  <View style={{ marginTop: 5, marginLeft: 15, marginBottom: 5, zIndex: 999 }}>
+  <View style={{ marginTop: 5, marginLeft: 15, marginBottom: 5, zIndex: -99 }}>
     <Text style={{ color: "white" }}>
       <Text style={{ fontWeight: "600" }}>{post.caption} </Text>
     </Text>
@@ -440,8 +456,13 @@ const Comments = ({ post }) => (
             flexDirection: "row",
           }}
         >
-          <Text style={{ fontWeight: "600", fontSize: 15, }}>{comment.user_name}</Text>
-          <Text style={{ color: "#cfd8dc", fontWeight: "200", fontSize: 15, }}>{"  "}{comment.comment}</Text>
+          <Text style={{ fontWeight: "600", fontSize: 15 }}>
+            {comment.user_name}
+          </Text>
+          <Text style={{ color: "#cfd8dc", fontWeight: "200", fontSize: 15 }}>
+            {"  "}
+            {comment.comment}
+          </Text>
         </Text>
       </View>
     ))}
@@ -457,6 +478,10 @@ const styles = StyleSheet.create({
     // borderWidth: 1.6,
     // borderColor: "#216aff",
   },
+  pinchable: {
+    flex: 1,
+    margin: 5,
+  },
   leftFootedContainer: {
     flexDirection: "row",
     //justifyContent: "space-between",
@@ -471,9 +496,9 @@ const styles = StyleSheet.create({
 
   inputfield: {
     borderRadius: 15,
-    borderColor: "#212121",
+    borderColor: "#2c2b62",
     padding: 12,
-    backgroundColor: "#212121",
+    backgroundColor: "#2c2b62",
     marginBottom: 10,
     borderWidth: 1,
     width: "75%",
@@ -486,7 +511,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    width: "100%",
+    width: "98%",
     backgroundColor: "#212121",
     borderRadius: 20,
     padding: 35,

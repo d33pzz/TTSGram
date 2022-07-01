@@ -68,7 +68,7 @@ const SignUpForm = ({ navigation }) => {
                 {
                   borderColor:
                     values.email.length < 1 || Validator.validate(values.email)
-                      ? "#9c27b0"
+                      ? "#ffc453"
                       : "red",
                 },
               ]}
@@ -92,7 +92,7 @@ const SignUpForm = ({ navigation }) => {
                 {
                   borderColor:
                     values.username.length < 1 || values.username.length >= 4
-                      ? "#9c27b0"
+                      ? "#ffc453"
                       : "red",
                 },
               ]}
@@ -116,7 +116,7 @@ const SignUpForm = ({ navigation }) => {
                 {
                   borderColor:
                     values.password.length < 1 || values.password.length >= 6
-                      ? "#9c27b0"
+                      ? "#ffc453"
                       : "red",
                 },
                 {
@@ -171,9 +171,9 @@ const styles = StyleSheet.create({
   },
   inputfield: {
     borderRadius: 15,
-    borderColor: "#9c27b0",
+    borderColor: "#ffc453",
     padding: 12,
-    backgroundColor: "#212121",
+    backgroundColor: "#2c2b62",
     marginBottom: 10,
     borderWidth: 1,
   },
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     minHeight: 42,
     borderRadius: 15,
-    backgroundColor: isValid ? "#820682" : "#e8a3e2",
+    backgroundColor: isValid ? "#f7931d" : "#ffc453",
   }),
   buttonText: {
     fontWeight: "600",
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   signUpText: {
-    color: "#003cff",
+    color: "#ffc453",
   },
 });
 export default SignUpForm;

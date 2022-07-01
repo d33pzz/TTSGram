@@ -1,11 +1,11 @@
-import { View, Image, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { firebase } from "../../firebase";
 
 const handleSignOut = async () => {
   try {
-    await firebase.auth().signOut();  
-    console.log("Signed out successfully")
+    await firebase.auth().signOut();
+    console.log("Signed out successfully");
   } catch (error) {
     console.log(error);
   }
@@ -14,7 +14,7 @@ const handleSignOut = async () => {
 const Header = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleSignOut}>
+      <TouchableOpacity onPress={() => navigation.push("TTSGramScreen")}>
         <Image
           style={styles.logo}
           source={require("../../assets/ttsgram_logo.png")}
@@ -26,25 +26,6 @@ const Header = ({ navigation }) => {
             style={styles.icon}
             source={{
               uri: "https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/ffffff/external-plus-multimedia-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png",
-            }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            style={styles.icon}
-            source={{
-              uri: "https://img.icons8.com/material-outlined/96/ffffff/like--v1.png",
-            }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.unreadBadge}>
-            <Text style={styles.unreadBadgeText}>11</Text>
-          </View>
-          <Image
-            style={styles.icon}
-            source={{
-              uri: "https://img.icons8.com/ios/50/ffffff/facebook-messenger--v1.png",
             }}
           />
         </TouchableOpacity>

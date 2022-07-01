@@ -5,24 +5,26 @@ import LoginForm from "../Components/loginScreen/LoginForm";
 
 import Helper from "../Components/Helper/Helper";
 
-const INSTA_LOGO =
-  "https://img.icons8.com/nolan/512/instagram-new.png";
-  const T_LOGO ="https://img.icons8.com/nolan/96/t-key.png"
+const INSTA_LOGO = "https://img.icons8.com/nolan/512/instagram-new.png";
+const T_LOGO = "https://img.icons8.com/nolan/96/t-key.png";
 
-const LoginScreen = ({navigation}) => (
-    <SafeAreaView
-      style={
-        Platform.OS === "android" ? Helper.AndroidSafeArea : styles.container
-      }
-    >
-     
-      <View style={styles.logoContainer}>
-        <Image source={{ uri: T_LOGO, height: 100, width: 100,}} />
-      </View>
+const LoginScreen = ({ navigation }) => (
+  <SafeAreaView
+    style={
+      Platform.OS === "android" ? Helper.AndroidSafeArea : styles.container
+    }
+  >
+    <View style={styles.logoContainer}>
+      <Image
+        style={{ height: 100, width: 100 }}
+        source={require("../assets/t3.png")}
+      />
+      {/* <Image source={{ uri: T_LOGO, height: 100, width: 100,}} /> */}
+    </View>
 
-      <LoginForm navigation={navigation}/>
-    </SafeAreaView>
-  );
+    <LoginForm navigation={navigation} />
+  </SafeAreaView>
+);
 
 const styles = StyleSheet.create({
   container: {

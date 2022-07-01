@@ -24,7 +24,7 @@ const UserDetailsScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   globalSafeAreaView: {
-    backgroundColor: "black",
+    backgroundColor: "#000037",
     flex: 1,
   },
 });

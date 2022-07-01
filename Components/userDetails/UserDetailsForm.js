@@ -1,15 +1,6 @@
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Touchable,
-} from "react-native";
-import React, { useState } from "react";
-import { firebase, db } from "../../firebase";
-import { Card } from "react-native-shadow-cards";
-import Helper, {
   GITHUB_LOGO,
   INSTA_LOGO,
   LINKEDIN_LOGO,
@@ -17,8 +8,11 @@ import Helper, {
   SNAPCHAT_LOGO,
   TWITTER_LOGO,
   WHATSAPP_LOGO,
-  EDIT_PROFILE,
+  PHONE,
+  MAIL,
 } from "../Helper/Helper";
+
+import * as Linking from "expo-linking";
 
 const UserDetailsForm = ({ navigation, user }) => (
   <View style={styles.container}>
@@ -27,6 +21,42 @@ const UserDetailsForm = ({ navigation, user }) => (
 );
 
 const Main = ({ navigation, user }) => {
+  const handleonWhatsappPress = () => {
+    user.whatsapp ? Linking.openURL("https://wa.me/+91" + user.whatsapp) : null;
+  };
+  const handleonLinkedinPress = () => {
+    user.linkedin
+      ? Linking.openURL("https://in.linkedin.com/" + user.linkedin)
+      : null;
+  };
+  const handleonInstaPress = () => {
+    user.instagram
+      ? Linking.openURL("https://www.instagram.com/" + user.instagram)
+      : null;
+  };
+  const handleonSnapPress = () => {
+    user.snapchat
+      ? Linking.openURL("http://www.snapchat.com/add/" + user.snapchat)
+      : null;
+  };
+  const handleonGithubPress = () => {
+    user.github ? Linking.openURL("https://github.com/" + user.github) : null;
+  };
+  const handleonSkypePress = () => {
+    user.skype ? Linking.openURL("skype:" + user.skype + "?chat") : null;
+  };
+  const handleonTwitterPress = () => {
+    user.twitter
+      ? Linking.openURL("https://twitter.com/" + user.twitter)
+      : null;
+  };
+  const handleonPhonePress = () => {
+    user.whatsapp ? Linking.openURL("tel:+91" + user.whatsapp) : null;
+  };
+  const handleonMailPress = () => {
+    user.email ? Linking.openURL("mailto: " + user.email) : null;
+  };
+
   return (
     <>
       <View style={styles.headerContainer}>
@@ -65,7 +95,7 @@ const Main = ({ navigation, user }) => {
       </View>
 
       <View style={[styles.socialMainRow, { marginTop: 25 }]}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonWhatsappPress}>
           <View style={styles.sociallistRowdetail}>
             <Image
               source={{
@@ -78,7 +108,7 @@ const Main = ({ navigation, user }) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonLinkedinPress}>
           <View style={styles.sociallistRowdetail}>
             <Text style={styles.socialTextR}>
               {user.linkedin ? user.linkedin : "PRIVATE"}
@@ -93,7 +123,7 @@ const Main = ({ navigation, user }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.socialMainRow}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonInstaPress}>
           <View style={styles.sociallistRowdetail}>
             <Image
               source={{
@@ -106,7 +136,7 @@ const Main = ({ navigation, user }) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonSnapPress}>
           <View style={styles.sociallistRowdetail}>
             <Text style={styles.socialTextR}>
               {user.snapchat ? user.snapchat : "PRIVATE"}
@@ -121,7 +151,7 @@ const Main = ({ navigation, user }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.socialMainRow}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonGithubPress}>
           <View style={styles.sociallistRowdetail}>
             <Image
               source={{
@@ -134,7 +164,7 @@ const Main = ({ navigation, user }) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonSkypePress}>
           <View style={styles.sociallistRowdetail}>
             <Text style={styles.socialTextR}>
               {user.skype ? user.skype : "PRIVATE"}
@@ -149,7 +179,7 @@ const Main = ({ navigation, user }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.socialMainRow}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonTwitterPress}>
           <View style={styles.sociallistRowdetail}>
             <Image
               source={{
@@ -162,10 +192,38 @@ const Main = ({ navigation, user }) => {
             </Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={handleonPhonePress}>
+          <View style={styles.sociallistRowdetail}>
+            <Text style={styles.socialTextR}>
+              {user.whatsapp ? user.whatsapp : "PRIVATE"}
+            </Text>
+            <Image
+              source={{
+                uri: PHONE,
+              }}
+              style={styles.socialcon}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.socialMainRow}>
+        <TouchableOpacity onPress={handleonMailPress}>
+          <View style={styles.sociallistRowdetail}>
+            <Image
+              source={{
+                uri: MAIL,
+              }}
+              style={styles.socialcon}
+            />
+            <Text style={styles.socialText}>
+              {user.email ? user.email : "PRIVATE"}
+            </Text>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity>
           <View style={styles.sociallistRowdetail}>
+            <Text style={styles.socialTextR}></Text>
             <Image style={styles.socialcon} />
-            <Text style={styles.socialText}></Text>
           </View>
         </TouchableOpacity>
       </View>

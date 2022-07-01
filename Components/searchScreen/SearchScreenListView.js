@@ -10,11 +10,17 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 
 import { Card } from "react-native-shadow-cards";
+import { Searchbar } from "react-native-paper";
 
-const SearchScreenListView = ({navigation}) => {
+const SearchScreenListView = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = React.useState("");
   const [users, setUsers] = useState([]);
+
+  const onChangeSearch = (query) => setSearchQuery(query);
   useEffect(() => {
-    db.collection("user").onSnapshot((snapshot) => {
+    db.collection("user")
+    // .orderBy('username')
+    .onSnapshot((snapshot) => {
       setUsers(
         snapshot.docs.map((users) => ({
           id: users.id,
@@ -26,14 +32,32 @@ const SearchScreenListView = ({navigation}) => {
 
   return (
     <View>
+      <Searchbar
+        style={{
+          backgroundColor: "#2c2b62",
+          borderRadius: 10,
+          marginBottom: 10,
+          marginLeft: 10,
+          marginRight: 10,
+        }}
+        placeholder="Search"
+        iconColor="#ffffff"
+        selectionColor={"#ffffff"}
+        placeholderTextColor={"#ffffff"}
+        color="#fff"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+        inputStyle={{ color: "#ffffff" }}
+      />
       <ScrollView>
-        {users.map((user, index) => (
-          
+        {users.filter(user => user.username.toLowerCase().includes(searchQuery?searchQuery.toLowerCase() : "")).map((user, index) => (
           <View key={index}>
-            <TouchableOpacity  onPress={() => {
-              /* 1. Navigate to the Details route with params, passing the params as an object in the method navigate */
-              navigation.navigate('UserDetailsScreen', {user});
-            }}>
+            <TouchableOpacity
+              onPress={() => {
+                /* 1. Navigate to the Details route with params, passing the params as an object in the method navigate */
+                navigation.navigate("UserDetailsScreen", { user });
+              }}
+            >
               <Card
                 style={{
                   padding: 10,
@@ -42,7 +66,7 @@ const SearchScreenListView = ({navigation}) => {
                   width: "100%",
                   marginRight: 10,
                   marginLeft: 10,
-                  backgroundColor: "#2c2c2c",
+                  backgroundColor: "#2c2b62",
                   elevation: 2,
                   opacity: 0.8,
                   borderRadius: 15,

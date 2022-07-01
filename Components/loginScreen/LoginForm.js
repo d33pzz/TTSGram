@@ -8,7 +8,6 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
-import { LinearGradient } from 'expo-linear-gradient';
 
 import {firebase} from "../../firebase";
 
@@ -64,7 +63,7 @@ const LoginForm = ({ navigation }) => {
                 {
                   borderColor:
                     values.email.length < 1 || Validator.validate(values.email)
-                      ? "#bf26ff"
+                      ? "#ffc453"
                       : "red",
                 },
               ]}
@@ -89,7 +88,7 @@ const LoginForm = ({ navigation }) => {
                 {
                   borderColor:
                     values.password.length < 1 || values.password.length >= 6
-                      ? "#bf26ff"
+                      ? "#ffc453"
                       : "red",
                 },
               ]}
@@ -109,7 +108,7 @@ const LoginForm = ({ navigation }) => {
               />
             </View>
             <View style={{ alignItems: "flex-end", marginBottom: 30 }}>
-              <Text style={{ color: "#216aff" }}>Forgot Password?</Text>
+              {/* <Text style={{ color: "#216aff" }}>Forgot Password?</Text> */}
             </View>
             <Pressable
               titleSize={20}
@@ -141,17 +140,17 @@ const styles = StyleSheet.create({
   inputfield: {
     borderRadius: 15,
     padding: 12,
-    backgroundColor: "#212121",
+    backgroundColor: "#2c2b62",
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#bf26ff",
+    borderColor: "#ffc453",
   },
   button: (isValid) => ({
     alignItems: "center",
     justifyContent: "center",
     minHeight: 42,
     borderRadius: 15,
-    backgroundColor: isValid ? "#bf26ff" : "#e8a3e2",
+    backgroundColor: isValid ? "#f7931d" : "#ffc453",
   }),
   buttonText: {
     fontWeight: "600",
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   signUpText: {
-    color: "#216aff",
+    color: "#ffc453",
   },
 });
 export default LoginForm;

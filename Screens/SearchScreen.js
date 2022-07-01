@@ -17,23 +17,7 @@ const SearchScreen = ({ navigation }) => {
       }
     >
       <View style={styles.logoContainer}>
-        <Searchbar
-          style={{
-            backgroundColor: "#000000",
-            borderRadius: 10,
-            marginBottom: 10,
-            marginLeft: 10,
-            marginRight: 10,
-          }}
-          placeholder="Search"
-          iconColor="#ffffff"
-          selectionColor={"#ffffff"}
-          placeholderTextColor={"#ffffff"}
-          color="#fff"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          inputStyle={{color: "#ffffff"}}
-        />
+        
       </View>
       <SearchScreenListView navigation={navigation} />
     </SafeAreaView>
@@ -42,7 +26,7 @@ const SearchScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
+    backgroundColor: "#000037",
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 12,

@@ -2,17 +2,18 @@ import { SafeAreaView, StyleSheet, View, Image } from "react-native";
 import React from "react";
 
 
+
+import TTSGramDetails from "../Components/TTSGram/TTSGramDetails";
 import Helper from "../Components/Helper/Helper";
-import ProfilePage from "../Components/profilePage/ProfilePage";
 
 
-const ProfileScreen = ({navigation}) => (
+const TTSGramScreen = ({navigation}) => (
     <SafeAreaView
       style={
         Platform.OS === "android" ? Helper.AndroidSafeArea : styles.container
       }
     >
-      <ProfilePage navigation={navigation}/>
+      <TTSGramDetails navigation={navigation}/>
     
     </SafeAreaView>
   );
@@ -26,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default TTSGramScreen;

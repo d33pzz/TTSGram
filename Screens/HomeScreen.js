@@ -1,7 +1,6 @@
 import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../Components/home/Header";
-import Stories from "../Components/home/Stories";
 import Posts from "../Components/home/Posts";
 import Helper from "../Components/Helper/Helper";
 import { db } from "../firebase";
@@ -28,6 +27,10 @@ const HomeScreen = ({ navigation }) => {
 
   const [users, setUsers] = useState([]);
   useEffect(() => {
+    assignUsers();
+  }, []);
+
+  const assignUsers = async () => {
     db.collection("user").onSnapshot((snapshot) => {
       setUsers(
         snapshot.docs.map((users) => ({
@@ -36,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
         }))
       );
     });
-  }, []);
+  };
 
   return (
     <SafeAreaView
@@ -58,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
+    backgroundColor: "#000037",
     flex: 1,
   },
 });

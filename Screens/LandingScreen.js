@@ -123,7 +123,7 @@ const LandingScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: "black",
+    backgroundColor: "#000037",
     flex: 1,
   },
 
@@ -132,12 +132,13 @@ const styles = StyleSheet.create({
     width: "100%",
     bottom: "3%",
     zIndex: 999,
-    backgroundColor: "#000",
+    backgroundColor: "#000037",
   },
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
     height: 50,
+    backgroundColor: "#000037",
     paddingTop: 10,
   },
   ICON: {

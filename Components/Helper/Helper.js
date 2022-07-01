@@ -14,12 +14,15 @@ export const TWITTER_LOGO = "https://img.icons8.com/nolan/512/twitter.png";
 export const EDIT_PROFILE =
   "https://img.icons8.com/glyph-neue/512/ffffff/undefined/edit.png";
 export const SNAPCHAT_LOGO = "https://img.icons8.com/nolan/512/snapchat.png";
+export const PHONE= "https://img.icons8.com/nolan/96/phone.png";
+export const MAIL= "https://img.icons8.com/nolan/96/new-post.png";
+export const FACEBOOK = "https://img.icons8.com/nolan/96/facebook-new.png"
 
 
 export default StyleSheet.create({
   AndroidSafeArea: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#000037",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

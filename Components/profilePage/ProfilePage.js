@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { firebase, db } from "../../firebase";
-import { Card } from "react-native-shadow-cards";
-import Helper, {
+import {
   GITHUB_LOGO,
   INSTA_LOGO,
   LINKEDIN_LOGO,
@@ -12,6 +11,8 @@ import Helper, {
   WHATSAPP_LOGO,
   EDIT_PROFILE,
 } from "../Helper/Helper";
+
+import * as Linking from "expo-linking";
 
 const ProfilePage = ({ navigation }) => (
   <View style={styles.container}>
@@ -30,17 +31,27 @@ const Main = ({ navigation }) => {
     }
   };
 
-  db.collection("user")
-    .doc(firebase.auth().currentUser.email)
-    .get()
-    .then((snapshot) => {
-      const data = snapshot.data();
-      //console.log(data);
-      setUser(data);
-    })
-    .catch((err) => {
-      console.log("Error getting documents", err);
-    });
+  useEffect(() => {
+    assignUsers();
+  }, []);
+
+  const assignUsers = async () => {
+    db.collection("user")
+      .doc(firebase.auth().currentUser.email)
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.data();
+        //console.log(data);
+        setUser(data);
+      })
+      .catch((err) => {
+        console.log("Error getting documents", err);
+      });
+  };
+
+  const handleonWhatsappPress = () => {
+    user.whatsapp ? Linking.openURL("https://wa.me/+91" + user.whatsapp) : null;
+  };
   return (
     <>
       <View style={styles.headerContainer}>
@@ -77,7 +88,7 @@ const Main = ({ navigation }) => {
       </View>
 
       <View style={[styles.socialMainRow, { marginTop: 25 }]}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleonWhatsappPress}>
           <View style={styles.sociallistRowdetail}>
             <Image
               source={{
