@@ -1,4 +1,6 @@
-# My Universal React Project
+# TTSGRAM - A SOCIAL NETWORK FROM REACT NATIVE
+# A ONE MONTH PROJECT
+
 
 <p>
   <!-- iOS -->
@@ -42,3 +44,15 @@ This project can be run from a web browser or the Expo client app. You may find 
 - Learn more about [Universal React](https://docs.expo.dev/).
 - See what API and components are [available in the React runtimes](https://docs.expo.dev/versions/latest/).
 - Find out more about developing apps and websites: [Guides](https://docs.expo.dev/guides/).
+
+## INSGRAM CLONE
+- This application was developed from the inspiration of instagram.
+- Developed only for TrueTechEmployees.
+- Special dedication to Cleverprogrammer to help me do it.
+
+## TrueTech Solutions
+- Chennai, TamilNadu
+- started working here from May 17, 2022.
+- started working on this project from May 30, 2022.
+
+
