@@ -1,5 +1,17 @@
 {
+  "expo": {
+    "name": "TTSGram",
+    "slug": "TTSGRAM",
+    "orientation": "portrait",
+    "icon": "./assets/truetech_logo_asset.png",
     "android": {
-      "package": "com.d33pzz.ttsgram"
-    }
-  }
+        "package": "com.d33pzz.ttsgram",
+        "versionCode": 2,
+        "adaptiveIcon": {
+            "foregroundImage": "./assets/truetech_logo_asset.png",
+            "backgroundColor": "#000037"
+        }
+    }  
+}
+    
+}

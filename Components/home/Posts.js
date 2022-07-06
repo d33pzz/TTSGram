@@ -101,7 +101,7 @@ const PostHeader = ({ post }) => (
         {post.user}
       </Text>
     </View>
-    <Text style={{ color: "white", fontWeight: "900" }}>...</Text>
+    <Text style={{ color: "white", fontWeight: "900" }}></Text>
   </View>
 );
 
@@ -145,7 +145,7 @@ const PostImage = ({ post, handleLike }) => {
       setPanEnabled(true);
     }
 
-    // when scale < 1, reset scale back to original (1)
+    // when scale < 1 & scale > 1, reset scale back to original (1)
     const nScale = nativeEvent.scale;
     if (nativeEvent.state === State.END) {
       if (nScale < 1) {
@@ -255,12 +255,12 @@ const PostFooter = ({ handleLike, post }) => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Icon
               imgStyle={styles.footerICon}
               imageUrl={PostFooterIcons[1].imageUrl}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* <Icon
             imgStyle={styles.footerICon}
@@ -322,44 +322,44 @@ const CommentInput = ({ post }) => {
   return (
     <>
       <View
+        style={{
+          width: "100%",
+          margin: 5,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          zIndex: -99,
+        }}
+      >
+        <View style={styles.inputfield}>
+          <TextInput
+            placeholderTextColor="#cfd8dc"
+            placeholder="Comment"
+            autoCapitalize="none"
+            color="#fff"
+            autoCorrect={false}
+            autoFocus={false}
+            defaultValue={comment}
+            onChangeText={(value) => setComment(value)}
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={() => handleComment(post)}
           style={{
-            width: "100%",
-            margin: 5,
-            flexDirection: "row",
+            marginRight: 5,
+            marginBottom: 10,
+            width: "18%",
+            backgroundColor: "#f7931d",
+            height: 40,
+            borderRadius: 15,
+            justifyContent: "center",
             alignItems: "center",
-            justifyContent: "space-between",
-            zIndex: -99
           }}
         >
-          <View style={styles.inputfield}>
-            <TextInput
-              placeholderTextColor="#cfd8dc"
-              placeholder="Comment"
-              autoCapitalize="none"
-              color="#fff"
-              autoCorrect={false}
-              autoFocus={false}
-              defaultValue={comment}
-              onChangeText={(value) => setComment(value)}
-            />
-          </View>
-
-          <TouchableOpacity
-            onPress={() => handleComment(post)}
-            style={{
-              marginRight: 5,
-              marginBottom: 10,
-              width: "18%",
-              backgroundColor: "#f7931d",
-              height: 40,
-              borderRadius: 15,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "#ffffff" }}>Send</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={{ color: "#ffffff" }}>Send</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
@@ -515,7 +515,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#212121",
     borderRadius: 20,
     padding: 35,
-    borderColor: "#216aff",
+    borderColor: "#f7931d",
     borderWidth: 1,
     alignItems: "center",
     shadowColor: "#fff",
@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#216aff",
+    backgroundColor: "#f7931d",
   },
   textStyle: {
     color: "white",

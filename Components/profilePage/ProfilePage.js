@@ -12,6 +12,8 @@ import {
   EDIT_PROFILE,
 } from "../Helper/Helper";
 
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 import * as Linking from "expo-linking";
 
 const ProfilePage = ({ navigation }) => (
@@ -199,6 +201,7 @@ const Main = ({ navigation }) => {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
+          marginBottom: 50,
         }}
       >
         <TouchableOpacity onPress={handleSignOut}>
@@ -238,7 +241,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontWeight: "700",
+    //fontWeight: "700",
     fontSize: 20,
     marginRight: 25,
   },

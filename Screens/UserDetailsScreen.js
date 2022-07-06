@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
 import Helper from "../Components/Helper/Helper";
 import UserDetailsForm from "../Components/userDetails/UserDetailsForm";
 
@@ -17,7 +17,9 @@ const UserDetailsScreen = ({ route, navigation }) => {
           : styles.globalSafeAreaView
       }
     >
-      <UserDetailsForm navigation={navigation} user={user} />
+      <ScrollView style={{ flexGrow: 1 }}>
+        <UserDetailsForm navigation={navigation} user={user} />
+      </ScrollView>
     </SafeAreaView>
   );
 };

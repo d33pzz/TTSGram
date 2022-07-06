@@ -1,10 +1,9 @@
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import Helper from "../Components/Helper/Helper"
-import UpdateProfile from "../Components/profileEditScreen/UpdateProfile";
+import Helper from "../Components/Helper/Helper";
+import NewPostPage from "../Components/newPost/NewPostPage";
 
-
-const ProfileEditScreen = ({navigation}) => {
+const AddPostScreen = ({navigation}) => {
   return (
     <SafeAreaView
       style={
@@ -13,7 +12,7 @@ const ProfileEditScreen = ({navigation}) => {
           : styles.globalSafeAreaView
       }
     >
-      <UpdateProfile navigation={navigation}/>
+      <NewPostPage navigation={navigation}/>
     </SafeAreaView>
   );
 };
@@ -25,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileEditScreen;
+export default AddPostScreen;

@@ -4,8 +4,6 @@ import React from "react";
 import Helper from "../Components/Helper/Helper";
 import SearchScreenListView from "../Components/searchScreen/SearchScreenListView";
 
-import { Searchbar } from "react-native-paper";
-
 const SearchScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
 

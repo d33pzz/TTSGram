@@ -13,6 +13,7 @@ import {
 } from "../Helper/Helper";
 
 import * as Linking from "expo-linking";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const UserDetailsForm = ({ navigation, user }) => (
   <View style={styles.container}>
@@ -73,7 +74,9 @@ const Main = ({ navigation, user }) => {
           />
         </TouchableOpacity>
 
-        <Text style={styles.headerText}>{user.username}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={styles.headerText}>
+          {user.username}
+        </Text>
         <Text></Text>
       </View>
       <View style={styles.logoContainer}>
@@ -261,8 +264,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontWeight: "700",
-    fontSize: 20,
+    //fontWeight: "700",
+    fontSize: RFPercentage(3),
     marginRight: 25,
   },
 

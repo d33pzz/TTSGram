@@ -8,8 +8,9 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-import {firebase} from "../../firebase";
+import { firebase } from "../../firebase";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -29,7 +30,7 @@ const LoginForm = ({ navigation }) => {
       console.log("Firebase Login Successful", email, password);
     } catch (error) {
       Alert.alert(
-        "Error", 
+        "Error",
         error.message + "\n\n What would you like to do next?",
         [
           {
@@ -40,7 +41,7 @@ const LoginForm = ({ navigation }) => {
           {
             text: "Sign Up",
             onPress: () => navigation.push("SignUpScreen"),
-          }
+          },
         ]
       );
     }
@@ -111,7 +112,7 @@ const LoginForm = ({ navigation }) => {
               {/* <Text style={{ color: "#216aff" }}>Forgot Password?</Text> */}
             </View>
             <Pressable
-              titleSize={20}
+              //titleSize={RFPercentage(2.5)}
               style={styles.button(isValid)}
               onPress={handleSubmit}
               disabled={!isValid}
@@ -153,9 +154,9 @@ const styles = StyleSheet.create({
     backgroundColor: isValid ? "#f7931d" : "#ffc453",
   }),
   buttonText: {
-    fontWeight: "600",
+    //fontWeight: "600",
     color: "#fff",
-    fontSize: 20,
+    fontSize: RFPercentage(3),
   },
   signupContainer: {
     flexDirection: "row",

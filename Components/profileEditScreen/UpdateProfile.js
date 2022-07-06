@@ -1,22 +1,23 @@
 import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    Pressable,
-    TouchableOpacity,
-    Alert,
-    Image,
-  } from "react-native";
-  import React, { useState } from "react";
-  
-  import {firebase} from "../../firebase";
-  
-  import { Formik } from "formik";
-  import * as Yup from "yup";
-  import Validator from "email-validator";
-  import UpdatProfileForm from "./UpdateProfileForm";
-  
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from "react-native";
+import React, { useState } from "react";
+
+import { firebase } from "../../firebase";
+
+import { Formik } from "formik";
+import * as Yup from "yup";
+import Validator from "email-validator";
+import UpdatProfileForm from "./UpdateProfileForm";
+
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const UpdateProfile = ({ navigation }) => (
   <View style={styles.container}>
@@ -26,9 +27,13 @@ const UpdateProfile = ({ navigation }) => (
   </View>
 );
 
-const Header = ({navigation}) => ( 
+const Header = ({ navigation }) => (
   <View style={styles.headerContainer}>
-    <TouchableOpacity onPress={() => {navigation!=null? navigation.goBack() : null}}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation != null ? navigation.goBack() : null;
+      }}
+    >
       <Image
         source={{
           uri: "https://img.icons8.com/ios-filled/100/ffffff/back.png",
@@ -36,11 +41,12 @@ const Header = ({navigation}) => (
         style={{ width: 30, height: 30 }}
       />
     </TouchableOpacity>
-    <Text style={styles.headerText}>Update Profile</Text>
+    <Text numberOfLines={1} adjustsFontSizeToFit style={styles.headerText}>
+      Update Profile
+    </Text>
     <Text></Text>
   </View>
 );
-
 
 const styles = StyleSheet.create({
   container: {
@@ -53,8 +59,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontWeight: "700",
-    fontSize: 20,
+    //fontWeight: "700",
+    fontSize: RFPercentage(3),
     marginRight: 25,
   },
 });

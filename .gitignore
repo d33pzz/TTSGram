@@ -57,7 +57,7 @@ buck-out/
 *.jsbundle
 
 #Firebase
-firebase.js
+*firebase.js
 
 
 # CocoaPods

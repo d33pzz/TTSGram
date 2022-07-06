@@ -43,8 +43,8 @@ const TTSGramDetails = ({ navigation }) => {
           }}
         >
           <Image
-            style={{ height: 100, width: 100 }}
-            source={require("../../assets/t3.png")}
+            style={{ height: 130, width: 100 }}
+            source={require("../../assets/truetech_logo.png")}
           />
         </TouchableOpacity>
       </View>

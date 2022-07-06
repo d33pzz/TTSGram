@@ -1,4 +1,10 @@
-import { SafeAreaView, StyleSheet, View, Image } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Image,
+  ScrollView,
+} from "react-native";
 import React from "react";
 import SignUpForm from "../Components/signupScreen/SignUpForm";
 
@@ -13,21 +19,23 @@ const SignUpScreen = ({ navigation }) => (
       Platform.OS === "android" ? Helper.AndroidSafeArea : styles.container
     }
   >
-    <View style={styles.logoContainer}>
-      <Image
-        style={{ height: 100, width: 100 }}
-        source={require("../assets/t3.png")}
-      />
-      {/* <Image source={{ uri: T_LOGO, height: 100, width: 100,}} /> */}
-    </View>
+    <ScrollView style={{ flexGrow: 1 }}>
+      <View style={styles.logoContainer}>
+        <Image
+          style={{ height: 130, width: 100 }}
+          source={require("../assets/truetech_logo.png")}
+        />
+        {/* <Image source={{ uri: T_LOGO, height: 100, width: 100,}} /> */}
+      </View>
 
-    <SignUpForm navigation={navigation} />
+      <SignUpForm navigation={navigation} />
+    </ScrollView>
   </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
+    backgroundColor: "#000037",
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 12,

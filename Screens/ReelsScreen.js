@@ -22,7 +22,7 @@ const ReelsScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: "black",
+      backgroundColor: "#000037",
       flex: 1,
       paddingTop: 50,
       paddingHorizontal: 12,

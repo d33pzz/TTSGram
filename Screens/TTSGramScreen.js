@@ -1,22 +1,20 @@
-import { SafeAreaView, StyleSheet, View, Image } from "react-native";
+import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
 import React from "react";
-
-
 
 import TTSGramDetails from "../Components/TTSGram/TTSGramDetails";
 import Helper from "../Components/Helper/Helper";
 
-
-const TTSGramScreen = ({navigation}) => (
-    <SafeAreaView
-      style={
-        Platform.OS === "android" ? Helper.AndroidSafeArea : styles.container
-      }
-    >
-      <TTSGramDetails navigation={navigation}/>
-    
-    </SafeAreaView>
-  );
+const TTSGramScreen = ({ navigation }) => (
+  <SafeAreaView
+    style={
+      Platform.OS === "android" ? Helper.AndroidSafeArea : styles.container
+    }
+  >
+    <ScrollView style={{ flexGrow: 1 }}>
+      <TTSGramDetails navigation={navigation} />
+    </ScrollView>
+  </SafeAreaView>
+);
 
 const styles = StyleSheet.create({
   container: {

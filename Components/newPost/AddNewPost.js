@@ -3,6 +3,8 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import FormikPostUploader from "./FormikPostUploader";
 
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 const AddNewPost = ({ navigation }) => (
   <View style={styles.container}>
     <Header navigation={navigation} />
@@ -38,8 +40,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontWeight: "700",
-    fontSize: 20,
+    //fontWeight: "700",
+    fontSize: RFPercentage(3),
     marginRight: 25,
   },
 });

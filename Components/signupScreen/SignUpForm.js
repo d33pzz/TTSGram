@@ -11,6 +11,7 @@ import React, { useState } from "react";
 
 import { firebase, db } from "../../firebase";
 
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Validator from "email-validator";
@@ -25,6 +26,10 @@ const SignUpForm = ({ navigation }) => {
   });
 
   const onSignUp = async (email, password, username) => {
+    // if (email.includes("@truetechsolutions.in")) {
+    // }
+    // else{
+    // }
     try {
       const authUser = await firebase
         .auth()
@@ -185,15 +190,17 @@ const styles = StyleSheet.create({
     backgroundColor: isValid ? "#f7931d" : "#ffc453",
   }),
   buttonText: {
-    fontWeight: "600",
+    //fontWeight: "600",
     color: "#fff",
-    fontSize: 20,
+    fontSize: RFPercentage(3),
   },
   signupContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    alignContent: "flex-start",
     width: "100%",
     marginTop: 50,
+    marginBottom: 10,
   },
   signUpText: {
     color: "#ffc453",

@@ -11,6 +11,8 @@ import ProfileEditScreen from "./ProfileEditScreen";
 import SearchScreen from "./SearchScreen";
 import UserDetailsScreen from "./UserDetailsScreen";
 import TTSGramScreen from "./TTSGramScreen";
+import AddNewPost from "../Components/newPost/AddNewPost";
+import AddPostScreen from "./AddPostScreen";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +35,7 @@ export const SignedInStack = () => (
       <Stack.Screen name="SearchScreen" component={SearchScreen} /> 
       <Stack.Screen name="UserDetailsScreen" component={UserDetailsScreen} />
       <Stack.Screen name="TTSGramScreen" component={TTSGramScreen} />
+      <Stack.Screen name="AddPostScreen" component={AddPostScreen} />
       
       
     </Stack.Navigator>

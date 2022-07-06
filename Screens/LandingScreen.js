@@ -5,12 +5,12 @@ import { Divider } from "react-native-elements";
 import { useState } from "react";
 import Helper from "../Components/Helper/Helper";
 import HomeScreen from "./HomeScreen";
-import NewPostScreen from "./NewPostScreen";
 import SearchScreen from "./SearchScreen";
 import ProfileScreen from "./ProfileScreen";
 import ReelsScreen from "./ReelsScreen";
+import AddPostScreen from "./AddPostScreen";
 
-const LandingScreen = ({navigation}) => {
+const LandingScreen = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState("Home");
   const [mainView, setMainView] = useState(0);
   const bottomTabImages = [
@@ -27,36 +27,35 @@ const LandingScreen = ({navigation}) => {
       active: "https://img.icons8.com/ios-filled/100/ffffff/search--v1.png",
       inactive: "https://img.icons8.com/ios/100/ffffff/search--v1.png",
     },
+    // {
+    //   case: 2,
+    //   name: "Reels",
+    //   active: "https://img.icons8.com/ios-filled/100/ffffff/instagram-reel.png",
+    //   inactive: "https://img.icons8.com/ios/100/ffffff/instagram-reel.png",
+    // },
     {
       case: 2,
-      name: "Reels",
-      active: "https://img.icons8.com/ios-filled/100/ffffff/instagram-reel.png",
-      inactive: "https://img.icons8.com/ios/100/ffffff/instagram-reel.png",
-    },
-    {
-      case: 3,
       name: "Acivity",
-      active: "https://img.icons8.com/ios-filled/100/ffffff/undefined/plus-2-math.png",
+      active:
+        "https://img.icons8.com/ios-filled/100/ffffff/undefined/plus-2-math.png",
       inactive:
         "https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/ffffff/external-plus-multimedia-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png",
     },
     {
-      case: 4,
+      case: 3,
       name: "Profile",
-      active:
-        "https://img.icons8.com/ios-filled/100/ffffff/undefined/user.png",
+      active: "https://img.icons8.com/ios-filled/100/ffffff/undefined/user.png",
       inactive:
         "https://img.icons8.com/ios-filled/100/ffffff/undefined/user.png",
     },
   ];
 
   const BottomIcon = ({ bottomTabImages }) => (
-    console.log(bottomTabImages.name),
+    //console.log(bottomTabImages.name),
     (
       <TouchableOpacity
         onPress={() => {
-          setActiveTab(bottomTabImages.name),
-           setMainView(bottomTabImages.case);
+          setActiveTab(bottomTabImages.name), setMainView(bottomTabImages.case);
         }}
       >
         <Image
@@ -83,18 +82,18 @@ const LandingScreen = ({navigation}) => {
   const MainView = ({ mainView }) => {
     switch (mainView) {
       case 0:
-        return <HomeScreen navigation={navigation}/>;
+        return <HomeScreen navigation={navigation} />;
       case 1:
-        return <SearchScreen navigation={navigation}/>;
+        return <SearchScreen navigation={navigation} />;
+      // case 2:
+      //   return <ReelsScreen navigation={navigation} />;
       case 2:
-        return <ReelsScreen navigation={navigation}/>;
+        return <AddPostScreen navigation={navigation} />;
       case 3:
-        return <NewPostScreen navigation={navigation}/>;
-      case 4:
-        return <ProfileScreen navigation={navigation}/>;
+        return <ProfileScreen navigation={navigation} />;
 
       default:
-        return <HomeScreen navigation={navigation}/>;
+        return <HomeScreen navigation={navigation} />;
     }
   };
 

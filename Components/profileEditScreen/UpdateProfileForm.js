@@ -4,7 +4,6 @@ import {
   TextInput,
   StyleSheet,
   Pressable,
-  TouchableOpacity,
   Alert,
   Image,
   ScrollView,
@@ -12,11 +11,9 @@ import {
 import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import Validator from "email-validator";
 import validUrl from "valid-url";
 import { firebase, db } from "../../firebase";
-import { FAB } from "react-native-paper";
-import Helper, {
+import {
   GITHUB_LOGO,
   INSTA_LOGO,
   LINKEDIN_LOGO,
@@ -25,6 +22,8 @@ import Helper, {
   TWITTER_LOGO,
   WHATSAPP_LOGO,
 } from "../Helper/Helper";
+
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const PLACEHOLDER_IMG =
   "https://winaero.com/blog/wp-content/uploads/2019/11/Photos-new-icon.png";
@@ -152,7 +151,8 @@ const UpdatProfileForm = ({ navigation }) => {
               <View
                 style={{
                   //margin: 20,
-                  //justifyContent: "space-between",
+                  width: "100%",
+                  justifyContent: "space-between",
                   flexDirection: "row",
                   marginBottom: 20,
                 }}
@@ -164,13 +164,13 @@ const UpdatProfileForm = ({ navigation }) => {
                       : PLACEHOLDER_IMG,
                   }}
                   style={{
-                    width: 100,
+                    width: "30%",
                     height: 100,
                     alignSelf: "center",
                     borderRadius: 15,
                   }}
                 />
-                <View style={{ marginLeft: 15, width: "70%", marginRight: 15 }}>
+                <View style={{ width: "65%" }}>
                   <Text
                     style={{
                       color: "#cfd8dc",
@@ -612,7 +612,7 @@ const UpdatProfileForm = ({ navigation }) => {
               </View>
 
               <Pressable
-                titleSize={20}
+                // titleSize={20}
                 style={styles.button(isValid)}
                 onPress={handleSubmit}
                 disabled={!isValid}
@@ -646,13 +646,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     minHeight: 42,
     borderRadius: 15,
-    marginBottom: 70,
+    marginBottom: 100,
     backgroundColor: isValid ? "#f7931d" : "#ffc453",
   }),
   buttonText: {
-    fontWeight: "600",
+    //fontWeight: "600",
     color: "#fff",
-    fontSize: 20,
+    fontSize: RFPercentage(3),
   },
   signupContainer: {
     flexDirection: "row",
